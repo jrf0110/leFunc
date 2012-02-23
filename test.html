@@ -6,7 +6,18 @@
       leFunc("test", "String", function(t){
         console.log(t);
       });
+      leFunc("test", ["String", "Number"], function(t, x){
+        for (var i = 0; i < x; i++){console.log(t);}
+      });
       test("weeee");
+      test("weeee", 3);
+
+      var x = {};
+      leFunc("bindTest", ["String", "Array"], x, function(m, arr){
+        console.log(m);
+        console.log(arr);
+      });
+      x.bindTest("awwww yeeee", [1,2,3]);
     </script>
   </head>
   <body></body>
