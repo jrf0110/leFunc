@@ -18,6 +18,18 @@
         console.log(arr);
       });
       x.bindTest("awwww yeeee", [1,2,3]);
+
+      var y = "what what?";
+      (function(){
+        // Some really important scope!
+        // ...
+        var y = "poo";
+        leFunc("something", this, function(){
+          console.log(y);
+        });
+        something();
+      })();
+      something();
     </script>
   </head>
   <body></body>

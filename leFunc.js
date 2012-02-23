@@ -11,7 +11,9 @@ var exports = exports || window;
      *
      ***/
     var isClass = function(obj, str) {
-      return Object.prototype.toString.call(obj) === '[object '+str+']';
+      var result = Object.prototype.toString.call(obj);
+      if (result == "[object global]") result = "[object Object]";
+      return result === '[object '+str+']';
     }
 
     var LeFunc = function(){}, lf
@@ -35,7 +37,6 @@ var exports = exports || window;
               for (; i < argTypes.length; i++){
                 if (argTypes[i].length != arguments.length) continue;
                 for (n = 0; n < arguments.length; n++){
-                  //if (typeof arguments[n] != argTypes[i][n])
                   if (!isClass(arguments[n], argTypes[i][n]))
                     break;
                 }
@@ -81,7 +82,7 @@ var exports = exports || window;
     params.fn         = params.fn         || null;
 
     _leFunc.define(params.name, params.argTypes, params.bindTo, params.fn);
-  })
+  });
   _leFunc.define(
     "leFunc",
     ["String", "Array", "Object", "Function"],
@@ -96,6 +97,14 @@ var exports = exports || window;
     exports,
     function(name, params, fn){
       _leFunc.define(name, params, window, fn);
+    }
+  );
+  _leFunc.define(
+    "leFunc",
+    ["String", "Object", "Function"],
+    exports,
+    function(name, bindTo, fn){
+      _leFunc.define(name, [], bindTo, fn);
     }
   );
   _leFunc.define(
