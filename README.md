@@ -3,13 +3,13 @@
 leFunc is way to overload functions in Javascript.
 
 Typically, if you have optional arguments or you're uncertain about parameter types and order coming into a function, you might do something like this:
-  function getItems(groupId, options, callback){
+  `function getItems(groupId, options, callback){
     if (typeof options == "function"){
       callback = options;
       options = {};
     }
     // Do some work with the corrected parameters
-  }
+  }`
 
 A fairly trivial example, but we do this a lot. Other languages provide more flexible options like function overloading. So you can do stuff like this:
   function getItems(groupId, callback){
