@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <script type="text/javascript" src="leFunc.js"></script>
+    <script type="text/javascript" src="../lib/leFunc.js"></script>
     <script type="text/javascript">
       leFunc("test", "String", function(t){
         console.log(t);
@@ -23,9 +23,8 @@
       (function(){
         // Some really important scope!
         // ...
-        console.log(this);
         var y = "poo";
-        leFunc("something", this, function(){
+        leFunc("something", window, function(){
           console.log(y);
         });
         something();
