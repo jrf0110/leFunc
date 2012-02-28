@@ -21,6 +21,10 @@ A fairly trivial example, but we do this a lot. Other languages provide more fle
       // Do some work with the corrected parameters
     }
 
+And you can call your functions how you'd like
+
+    getItems("alsjdflkakdsjf", function(){}) // calls the first function
+
 leFunc allows you to do this.
 
 ## Examples
@@ -46,7 +50,7 @@ leFunc allows you to do this.
     getItems("4f3ae2e3c3e54c2b90000072", {date: {$lt: new Date()}} function(error, result){});
     // output: This is the THREE parameter function!
 
-You can define as many overloads as you want with as many combinations of types as you want.
+You can define as many overloads as you want with as many combinations of types as you want and leFunc will figure out which function you wanted to use based on the parameters.
 
 ## Binding
 
