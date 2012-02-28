@@ -46,15 +46,48 @@ leFunc allows you to do this.
     getItems("4f3ae2e3c3e54c2b90000072", {date: {$lt: new Date()}} function(error, result){});
     // output: This is the THREE parameter function!
 
-    // Pass in an object to leFunc and it will bind your definition to that object
-    var x = "what what?";
+You can define as many overloads as you want with as many combinations of types as you want.
+
+## Binding
+
+The function leFunc is actually defined on the exports or window object by the internal function _leFunc. There are like 8 overloads for it so you can call it with any combination of parameters and it will still work. One of the optional parameters to leFunc is an object you want your function to be defined on.
+
+    // So, maybe you're in some scope
     (function(){
-      // Some really important scope!
-      // ...
-      var x = "weeeee";
-      leFunc("something", this, function(){
-        console.log(x);
-      });
+      // And you only want leFunc to define your function within this scope
+      // Just pass in the object you want to be defined on
+      leFunc(
+          "somethingCool"
+        , this
+        , ["String", "String", "Function"]
+        , function(str1, str2, callback){
+          console.log(str1 + str2);
+          callback();
+        }
+      );
+      leFunc(
+          "somethingCool"
+        , this
+        , ["String", "Number", "Function"]
+        , function(str1, num, callback){
+          for (var i = 0; i < num; i++){
+            console.log(str1);
+          }
+          callback();
+        }
+      );
+
+      something("Right ", "On", function(){console.log("complete")});
+      // output:  "Right On"
+      //          "complete"
+
+      something("Right On", 3, function(){console.log("complete")});
+      // output:  "Right On"
+      //          "Right On"
+      //          "Right On"
+      //          "Complete"
     })();
 
-You can define as many overloads as you want with as many combinations of types as you want.
+    something("Just ", "Testing", function(){console.log("complete")});
+    // This would throw an error saying something is undefined since it's not
+    // defined in this scope
