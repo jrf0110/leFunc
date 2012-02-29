@@ -13,14 +13,14 @@ Typically, if you have optional arguments or you're uncertain about parameter ty
     }
 
 A fairly trivial example, but we do this a lot. Other languages provide more flexible options like function overloading. So you can do stuff like this:
-
+```javascript
     function getItems(groupId, callback){
       // Do some work with the corrected parameters
     }
     function getItems(groupId, options, callback){
       // Do some work with the corrected parameters
     }
-
+```
 And you can call your functions how you'd like
 
     getItems("alsjdflkakdsjf", function(){}) // calls the first function
