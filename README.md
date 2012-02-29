@@ -30,6 +30,8 @@ And you can call your functions how you'd like
 leFunc allows you to do this.
 
 ## Examples
+
+```javascript
     function _getItems(groupId, options, callback){
       // Do some work with the corrected parameters
     }
@@ -51,6 +53,7 @@ leFunc allows you to do this.
     // output: This is the TWO parameter function!
     getItems("4f3ae2e3c3e54c2b90000072", {date: {$lt: new Date()}} function(error, result){});
     // output: This is the THREE parameter function!
+```
 
 You can define as many overloads as you want with as many combinations of types as you want and leFunc will figure out which function you wanted to use based on the parameters.
 
@@ -58,6 +61,7 @@ You can define as many overloads as you want with as many combinations of types 
 
 The function leFunc is actually defined on the exports or window object by the internal function _leFunc. There are like 8 overloads for it so you can call it with any combination of parameters and it will still work. One of the optional parameters to leFunc is an object you want your function to be defined on.
 
+```javascript
     // So, maybe you're in some scope
     (function(){
       // And you only want leFunc to define your function within this scope
@@ -97,3 +101,4 @@ The function leFunc is actually defined on the exports or window object by the i
     something("Just ", "Testing", function(){console.log("complete")});
     // This would throw an error saying something is undefined since it's not
     // defined in this scope
+```
