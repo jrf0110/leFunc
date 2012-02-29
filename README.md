@@ -1,6 +1,6 @@
 # leFunc
 
-leFunc is way to overload functions in Javascript.
+leFunc is a way to overload functions in Javascript.
 
 Typically, if you have optional arguments or you're uncertain about parameter types and order coming into a function, you might do something like this:
 
