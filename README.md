@@ -30,6 +30,8 @@ getItems({butt: true}, "What what?" function(){}); // Calls the fourth function
 
 Mainly to avoid typechecking. It's something you always have to do and it's the same every time, so why not abstract it away? And it's really small.
 
+leFunc checks your parameters by type, so you can define any combination of function and it will figure out which function you meant.
+
 ## A less verbose syntax
 
 ```javascript
