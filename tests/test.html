@@ -3,33 +3,20 @@
   <head>
     <script type="text/javascript" src="../lib/leFunc.js"></script>
     <script type="text/javascript">
-      leFunc("test", "String", function(t){
-        console.log(t);
+      var test = leFunc({
+        "s,n": function(str, num){
+          console.log(str, num);
+        },
+        "string,number,function": function(str, num, callback){
+          console.log(num, str);
+          callback();
+        }
       });
-      leFunc("test", ["String", "Number"], function(t, x){
-        for (var i = 0; i < x; i++){console.log(t);}
-      });
-      test("weeee");
-      test("weeee", 3);
 
-      var x = {};
-      leFunc("bindTest", ["String", "Array"], x, function(m, arr){
-        console.log(m);
-        console.log(arr);
+      test("This is a String", 57);
+      test("This is a string", 57, function(){
+        console.log("DONE!");
       });
-      x.bindTest("awwww yeeee", [1,2,3]);
-
-      var y = "what what?";
-      (function(){
-        // Some really important scope!
-        // ...
-        var y = "poo";
-        leFunc("something", window, function(){
-          console.log(y);
-        });
-        something();
-      })();
-      something();
     </script>
   </head>
   <body></body>
