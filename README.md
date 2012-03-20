@@ -1,104 +1,106 @@
-# leFunc
+# Type check your functions with leFunc
 
-leFunc is a way to overload functions in Javascript.
-
-Typically, if you have optional arguments or you're uncertain about parameter types and order coming into a function, you might do something like this:
+leFunc provides type checking for your functions and is an easy way to make function overloads. It's also really small. It's like 20 lines of code uncompressed. So, yeah. Don't worry about it mucking things up.
 
 ```javascript
-function getItems(groupId, options, callback){
-  if (typeof options == "function"){
-    callback = options;
-    options = {};
+var getItems = leFunc({
+  "string"; function(id){
+    // Do something
+  },
+  "string,object": function(id, options){
+    // Do something else
+  },
+  "string,object,function": function(id, options, callback){
+    // Do something different
+    callback();
+  },
+  "object,string,function": function(options, message, callback){
+    // Do something ca-raaaaazzzy
+    callback();
   }
-  // Do some work with the corrected parameters
-}
-```
-
-A fairly trivial example, but we do this a lot. Other languages provide more flexible options like function overloading. So you can do stuff like this:
-
-```javascript
-function getItems(groupId, callback){
-  // Do some work with the corrected parameters
-}
-function getItems(groupId, options, callback){
-  // Do some work with the corrected parameters      
-}
-```
-
-And you can call your functions how you'd like
-
-```javascript
-getItems("alsjdflkakdsjf", function(){}) // calls the first function
-```
-
-leFunc allows you to do this.
-
-## Examples
-
-```javascript
-function _getItems(groupId, options, callback){
-  // Do some work with the corrected parameters
-}
-// Define function getItems(string groupId, function callback) to window
-leFunc("getItems", ["String", "Function"], function(groupId, callback){
-  // Maybe since we know that were not getting the options variable
-  // We might want to do some extra work
-  console.log("This is the TWO parameter function!");
-  _getItems(groupId, {}, callback);
 });
-// Define function getItems(string groupId, function callback) to window
-leFunc("getItems", ["String", "Object", "Function"], function(groupId, options, callback){
-  console.log("This is the THREE parameter function")
-  _getItems(groupId, options, callback);
-});
-// Call the function how you want to know
-getItems("4f3ae2e3c3e54c2b90000072", function(error, result){});
-// output: This is the TWO parameter function!
-getItems("4f3ae2e3c3e54c2b90000072", {date: {$lt: new Date()}} function(error, result){});
-// output: This is the THREE parameter function!
+
+getItems("123abc"); // Calls the first function
+getItems("123abc", {poop: true}); // Calls the second function
+getItems("123abc", {butt: true}, function(){}); // Calls the third function
+getItems({butt: true}, "What what?" function(){}); // Calls the fourth function
 ```
 
-You can define as many overloads as you want with as many combinations of types as you want and leFunc will figure out which function you wanted to use based on the parameters.
+## Why?
 
-## Binding
+Mainly to avoid typechecking. It's something you always have to do and it's the same every time, so why not abstract it away? And it's really small.
 
-The function leFunc is actually defined on the exports or window object by the internal function _leFunc. There are like 8 overloads for it so you can call it with any combination of parameters and it will still work. One of the optional parameters to leFunc is an object you want your function to be defined on.
+## A less verbose syntax
 
 ```javascript
-// So, maybe you're in some scope
-(function(){
-  // And you only want leFunc to define your function within this scope
-  // Just pass in the object you want to be defined on
-  leFunc(
-    "somethingCool"
-      , this
-      , ["String", "String", "Function"]
-      , function(str1, str2, callback){
-          console.log(str1 + str2);
-          callback();
-      }
-  );
-  leFunc(
-      "somethingCool"
-    , this
-    , ["String", "Number", "Function"]
-    , function(str1, num, callback){
-      for (var i = 0; i < num; i++){
-        console.log(str1);
-      }
-      callback();
-    }
-  );
-  something("Right ", "On", function(){console.log("complete")});
-  // output:  "Right On"
-  //          "complete"
-  something("Right On", 3, function(){console.log("complete")});
-  // output:  "Right On"
-  //          "Right On"
-  //          "Right On"
-  //          "Complete"
-})();
-something("Just ", "Testing", function(){console.log("complete")});
-// This would throw an error saying something is undefined since it's not
-// defined in this scope
+var getItems = leFunc({
+  "s"; function(id){
+    // Do something
+  }
+  "s,o": function(id, options){
+    // Do something else
+  },
+  "s,o,f": function(id, options, callback){
+    // Do something different
+    callback();
+  }
+});
 ```
+
+And an even less verbose syntax:
+
+```javascript
+var getItems = leFunc({
+  "s"; function(id){
+    // Do something
+  }
+  "so": function(id, options){
+    // Do something else
+  },
+  "sof": function(id, options, callback){
+    // Do something different
+    callback();
+  }
+});
+```
+## Limitations
+
+leFunc currently only works for the following data types:
+
+* Number
+* String
+* Object
+* Date
+* Function
+
+Basically, all the normal stuff. You can't use Undefined, NaN, Null, Global, etc., though I do plan on implementing those soon as long as it's not too costly.
+
+## Real Usage
+
+Ideally you wouldn't re-define the same function for every parameter combination. That's just inefficient. So define your function outside of leFunc with the expected parameter set and use leFunc to do any special stuff based on the parameters.
+
+```javascript
+var _hop = function(userId, hopscotchId, options, callback){
+  // Prepare awesome hopscotchId thingy for userId
+  callback();
+};
+
+var hop = leFunc({
+  "": function(){
+    /* No parameters, so lets use the current userId
+       and get a random hopscotchId to use and use
+       the default options
+   */
+    var uid       = getCurrentUserId()
+      , hid       = getRandomHopId()
+      , options   = { awesome: true, steps: 20 }
+      , callback  = function(){ /* do something */}
+    ;
+    _hop(uid, hid, options, callback);
+  }
+});
+```
+
+## Still not convinced?
+
+That's cool I guess.
