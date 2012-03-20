@@ -89,15 +89,51 @@ var _hop = function(userId, hopscotchId, options, callback){
 
 var hop = leFunc({
   "": function(){
-    /* No parameters, so lets use the current userId
-       and get a random hopscotchId to use and use
-       the default options
+    /*
+      No parameters, so lets use the current userId
+      and get a random hopscotchId to use and use
+      the default options
    */
     var uid       = getCurrentUserId()
       , hid       = getRandomHopId()
       , options   = { awesome: true, steps: 20 }
       , callback  = function(){ /* do something */}
     ;
+    _hop(uid, hid, options, callback);
+  },
+  "s": function(uid){
+    /*
+      Just a userId so lets use that and use a
+      random hopscotch course and the default
+      options
+    */
+    var hid       = getRandomHopId()
+      , options   = { awesome: true, steps: 20 }
+      , callback  = function(){ /* do something */}
+    ;
+    _hop(uid, hid, options, callback);
+  },
+  "s,s": function(uid, hid){
+    /*
+      Use a random hopscotch course and the
+      default options
+    */
+    var options   = { awesome: true, steps: 20 }
+      , callback  = function(){ /* do something */}
+    ;
+    _hop(uid, hid, options, callback);
+  },
+  "s,s,o": function(uid, hid, options){
+    /*
+      All we need to do is define the default callback
+    */
+    var callback  = function(){ /* do something */};
+    _hop(uid, hid, options, callback);
+  },
+  "s,s,o,f": function(uid, hid, options, callback){
+    /*
+      Just call the private function
+    */
     _hop(uid, hid, options, callback);
   }
 });
