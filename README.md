@@ -73,6 +73,7 @@ leFunc currently only works for the following data types:
 * String
 * Object
 * Date
+* Boolean
 * Function
 
 Basically, all the normal stuff. You can't use Undefined, NaN, Null, Global, etc., though I do plan on implementing those soon as long as it's not too costly.
