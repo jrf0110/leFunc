@@ -66,7 +66,7 @@ var getItems = leFunc({
 });
 ```
 
-## And now with binding
+## And now with binding!
 
 ```javascript
 var myObject = {
