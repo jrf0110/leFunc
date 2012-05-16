@@ -65,6 +65,29 @@ var getItems = leFunc({
   }
 });
 ```
+
+## And now with binding
+
+```javascript
+var myObject = {
+  prop1: "icanhazproperty?"
+, prop2: 123456
+};
+
+var getItems = leFunc({
+  "s"; function(id){
+    // Do something
+  }
+  "so": function(id, options){
+    // Do something else
+  },
+  "sof": function(id, options, callback){
+    // Do something different
+    callback();
+  }
+}, myObject); // Pass in your object to bind as the second parameter
+```
+
 ## Limitations
 
 leFunc currently only works for the following data types:
@@ -139,6 +162,8 @@ var hop = leFunc({
   }
 });
 ```
+
+
 
 ## Still not convinced?
 
