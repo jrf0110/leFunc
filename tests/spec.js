@@ -3,6 +3,23 @@ describe('leFunc', function(){
     return [leString, leNumber, leDate, leObject, leFunction];
   }
 
+  describe('Binding', function(){
+    var myObject = {
+      prop1: "icanhazproperty?"
+    , prop2: 123456
+    };
+    var fn = leFunc({
+      "": function(){
+        return this;
+      }
+    }, myObject);
+
+    it('Should bind myObject to fn', function(){
+      var t = fn();
+      expect(t).toEqual(myObject);
+    });
+  });
+
   describe('Function Selecting', function(){
     describe('Verbose Syntax', function(){
       var func1 = leFunc({
@@ -101,9 +118,5 @@ describe('leFunc', function(){
         expect(function(){func1("test", 1, function(){})}).toThrow(e);
       });
     });
-  });
-
-  describe('Shorthand Syntax', function(){
-
   });
 });
