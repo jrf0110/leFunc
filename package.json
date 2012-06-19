@@ -2,12 +2,13 @@
   "author": "John Fawcett <jrf0110@gmail.com> (http://johnfawcett.name)",
   "name": "leFunc",
   "description": "Function overloader",
-  "version": "1.0.333",
+  "version": "1.0.4",
   "homepage": "https://github.com/jrf0110/leFunc",
   "repository": {
     "type": "git",
     "url": "git://github.com/jrf0110/leFunc.git"
   },
+	"main": "lib/leFunc.js"
   "engines": {
     "node": ">=0.4.0"
   },
