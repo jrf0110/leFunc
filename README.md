@@ -32,6 +32,18 @@ Mainly to avoid typechecking. It's something you always have to do and it's the 
 
 leFunc checks your parameters by type, so you can define any combination of function and it will figure out which function you meant.
 
+##Install
+
+```
+npm install leFunc
+```
+
+or
+
+```
+jam install leFunc
+```
+
 ## A less verbose syntax
 
 ```javascript
