@@ -118,5 +118,21 @@ describe('leFunc', function(){
         expect(function(){func1("test", 1, function(){})}).toThrow(e);
       });
     });
+    
+    describe("Reverting to Default", function(){
+      var func1 = leFunc({
+        "default": function(){
+          return 0;
+        }
+      });
+
+      it('Should revert to the default function', function(){
+        expect(func1()).toEqual(0);
+      });
+
+      it('Should revert to the default function', function(){
+        expect(func1("1", "2", "3")).toEqual(0);
+      });
+    });
   });
 });

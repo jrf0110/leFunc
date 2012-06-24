@@ -17,6 +17,10 @@ var getItems = leFunc({
   "object,string,function": function(options, message, callback){
     // Do something ca-raaaaazzzy
     callback();
+  },
+  "default": function(){
+    // Figure out what to do with arguments
+    callback();
   }
 });
 
@@ -111,7 +115,11 @@ leFunc currently only works for the following data types:
 * Boolean
 * Function
 
-Basically, all the normal stuff. You can't use Undefined, NaN, Null, Global, etc., though I do plan on implementing those soon as long as it's not too costly.
+Basically, all the normal stuff. You can't use Undefined, NaN, Null, Global, etc., though I do plan on implementing those soon as long as it's not too costly. I've been experimenting with Custom data types via instanceof I've found some solutions that are not too shitty. So, expect those in the near future.
+
+## The Fallback
+
+If you try and call a leFunc that hasn't been define, it will throw a pretty vague error. So, if you want to avoid that, provide a default function under the key "default" like is seen in the first example.
 
 ## Real Usage
 
