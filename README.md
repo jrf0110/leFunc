@@ -183,6 +183,40 @@ var hop = leFunc({
 });
 ```
 
+## In the Future
+
+I've gotten some requests for custom data types using the instanceof. I've experimented with an implementation of it that would look like this:
+
+```javascript
+var myFunc = leFunc({
+  "string,jQuery,Router,Poop": function(id, $el, app, myPoop){
+    // Do work
+  }
+, "string,Router,Poop": function(id, app, myPoop){
+    // And so on
+  }
+}, {
+  // Provide a hash that maps to custom datatypes
+  jQuery: jQuery
+, Router: utils.Router
+, Poop: MyAwesomePoopClass
+})
+```
+
+Or maybe:
+
+```javascript
+leFunc.dataTypes({
+  // Provide a hash that maps to custom datatypes
+  jQuery: jQuery
+, Router: utils.Router
+, Poop: MyAwesomePoopClass
+});
+
+// Define functions like above
+```
+
+This will require some re-working. If I do this, I may take out the short-hand option to keep things more consistent.
 
 
 ## Still not convinced?
