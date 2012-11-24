@@ -65,7 +65,7 @@ describe('leFunc', function(){
         expect(func1("test", 1, d, {}, f)).toEqual(_func('test', 1, d, {}, f));
       });
       it('Should throw an undefined error', function(){
-        var e = new Error("The function of type snf is undefined");
+        var e = new Error("The function of type stringnumberfunction is undefined");
         expect(function(){func1("test", 1, function(){})}).toThrow(e);
       });
     });
@@ -114,11 +114,11 @@ describe('leFunc', function(){
         expect(func1("test", 1, d, {}, f)).toEqual(_func('test', 1, d, {}, f));
       });
       it('Should throw an undefined error', function(){
-        var e = new Error("The function of type snf is undefined");
+        var e = new Error("The function of type stringnumberfunction is undefined");
         expect(function(){func1("test", 1, function(){})}).toThrow(e);
       });
     });
-    
+
     describe("Reverting to Default", function(){
       var func1 = leFunc({
         "default": function(){
@@ -132,6 +132,39 @@ describe('leFunc', function(){
 
       it('Should revert to the default function', function(){
         expect(func1("1", "2", "3")).toEqual(0);
+      });
+    });
+
+    describe("Custom Data Types", function(){
+      var ctr1 = function(){}, ctr2 = function(){}, ctr3 = function(){};
+
+      leFunc.config({
+        dataTypes: {
+          ctr1: ctr1
+        , ctr2: ctr2
+        }
+      });
+
+      var func1 = leFunc({
+        "ctr1": function(myCtr1){
+          return 0;
+        }
+      , "ctr1,ctr2": function(myCtr1, myCtr2){
+          return 1;
+        }
+      });
+
+      it('Should select ctr1', function(){
+        expect(func1(new ctr1())).toEqual(0);
+      });
+
+      it('Should select ctr1,ctr2', function(){
+        expect(func1(new ctr1(), new ctr2())).toEqual(1);
+      });
+
+      it('Should throw an undefined error', function(){
+        var e = new Error('The function of type ctr1object is undefined')
+        expect(function(){ func1(new ctr1(), new ctr3()) }).toThrow(e);
       });
     });
   });
