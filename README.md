@@ -1,6 +1,6 @@
-# Type check your functions with leFunc
+# Overload your functions with leFunc
 
-leFunc provides type checking for your functions and is an easy way to make function overloads. It's also really small. It's like 20 lines of code uncompressed. So, yeah. Don't worry about it mucking things up.
+It basically provides a structured way to type check your functions. It's particularly useful when building api's that can have multiple combinations of parameters.
 
 ```javascript
 var getItems = leFunc({
@@ -25,16 +25,10 @@ var getItems = leFunc({
 });
 
 getItems("123abc"); // Calls the first function
-getItems("123abc", {poop: true}); // Calls the second function
-getItems("123abc", {butt: true}, function(){}); // Calls the third function
-getItems({butt: true}, "What what?" function(){}); // Calls the fourth function
+getItems("123abc", { poop: true }); // Calls the second function
+getItems("123abc", { butt: true }, function(){}); // Calls the third function
+getItems({ butt: true }, "What what?" function(){}); // Calls the fourth function
 ```
-
-## Why?
-
-Mainly to avoid typechecking. It's something you always have to do and it's the same every time, so why not abstract it away? And it's really small.
-
-leFunc checks your parameters by type, so you can define any combination of function and it will figure out which function you meant.
 
 ##Install
 
@@ -65,23 +59,6 @@ var getItems = leFunc({
 });
 ```
 
-And an even less verbose syntax:
-
-```javascript
-var getItems = leFunc({
-  "s"; function(id){
-    // Do something
-  }
-  "so": function(id, options){
-    // Do something else
-  },
-  "sof": function(id, options, callback){
-    // Do something different
-    callback();
-  }
-});
-```
-
 ## And now with binding!
 
 ```javascript
@@ -92,30 +69,68 @@ var myObject = {
 
 var getItems = leFunc({
   "s"; function(id){
-    // Do something
+    console.log(this.prop1)
   }
   "so": function(id, options){
-    // Do something else
+    console.log(this.prop2)
   },
   "sof": function(id, options, callback){
-    // Do something different
+    console.log(this.prop1, this.prop2);
     callback();
   }
 }, myObject); // Pass in your object to bind as the second parameter
 ```
 
-## Limitations
+## Data Types
 
-leFunc currently only works for the following data types:
+Any data type that you can use in javascript, you can use with leFunc. That is, any data type as described by ```Object.prototype.toString```. You can also provide custom data types by defining the name of a class and the corresponding constructor via the leFunc.config function
 
-* Number
-* String
-* Object
-* Date
-* Boolean
-* Function
+```javascript
+leFunc.dataTypes({
+  // Provide a hash that maps to custom datatypes
+  jQuery: jQuery
+, Router: utils.Router
+, Poop: MyAwesomePoopClass
+});
 
-Basically, all the normal stuff. You can't use Undefined, NaN, Null, Global, etc., though I do plan on implementing those soon as long as it's not too costly. I've been experimenting with Custom data types via instanceof I've found some solutions that are not too shitty. So, expect those in the near future.
+var myFunc = leFunc({
+  "string,jQuery,Router,Poop": function(id, $el, app, myPoop){
+    // Do work
+  }
+, "string,Router,Poop": function(id, app, myPoop){
+    // And so on
+  }
+});
+```
+
+# Custom Mappings
+
+Using the config function, you can provide special mappings to the default data types. This is how the shorthand syntax is accomplished.
+
+```javascript
+{
+  s: "string"
+, b: "boolean"
+, n: "number"
+, o: "object"
+, u: "undefined"
+, r: "regexp"
+, a: "array"
+, f: "function"
+, d: "date"
+}
+```
+
+You can easily add your own like this:
+
+```javascript
+leFunc.config({
+  str:  "string"
+, bool: "boolean"
+, num:  "number"
+, g:    "global"
+});
+```
 
 ## The Fallback
 
@@ -182,42 +197,6 @@ var hop = leFunc({
   }
 });
 ```
-
-## In the Future
-
-I've gotten some requests for custom data types using the instanceof. I've experimented with an implementation of it that would look like this:
-
-```javascript
-var myFunc = leFunc({
-  "string,jQuery,Router,Poop": function(id, $el, app, myPoop){
-    // Do work
-  }
-, "string,Router,Poop": function(id, app, myPoop){
-    // And so on
-  }
-}, {
-  // Provide a hash that maps to custom datatypes
-  jQuery: jQuery
-, Router: utils.Router
-, Poop: MyAwesomePoopClass
-})
-```
-
-Or maybe:
-
-```javascript
-leFunc.dataTypes({
-  // Provide a hash that maps to custom datatypes
-  jQuery: jQuery
-, Router: utils.Router
-, Poop: MyAwesomePoopClass
-});
-
-// Define functions like above
-```
-
-This will require some re-working. If I do this, I may take out the short-hand option to keep things more consistent.
-
 
 ## Still not convinced?
 
