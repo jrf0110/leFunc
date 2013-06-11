@@ -4,7 +4,7 @@ It basically provides a structured way to type check your functions. It's partic
 
 ```javascript
 var getItems = leFunc({
-  "string"; function(id){
+  "string": function(id){
     // Do something
   },
   "string,object": function(id, options){
