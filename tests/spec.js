@@ -18,6 +18,19 @@ describe('leFunc', function(){
       var t = fn();
       expect(t).toEqual(myObject);
     });
+
+    it('Should bind to `this` by default', function(){
+      Object.create({
+        a: 'yay'
+
+      , fn: leFunc({
+          '':
+          function(){
+            expect( this.a ).toEqual('yay')
+          }
+        })
+      }).fn();
+    });
   });
 
   describe('Function Selecting', function(){
@@ -170,7 +183,7 @@ describe('leFunc', function(){
       });
 
       it('Should throw an undefined error', function(){
-        var e = new Error('The function of type ctr1object is undefined')
+        var e = new Error('The function of type ctr1Object is undefined')
         expect(function(){ func1(new ctr1(), new ctr3()) }).toThrow(e);
       });
     });
