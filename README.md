@@ -14,9 +14,9 @@ var getItems = leFunc({
     // Do something different
     callback();
   },
-  "object,string,function": function(options, message, callback){
+  "object,string,function?": function(options, message, callback){
     // Do something ca-raaaaazzzy
-    callback();
+    if ( callback ) callback();
   },
   "default": function(){
     // Figure out what to do with arguments
@@ -40,6 +40,24 @@ or
 
 ```
 jam install leFunc
+```
+
+## Optional Args
+
+While it's nice to have leFunc parse function argument signatures, sometimes its explicitness can get in the way of JavaScript flexibility. Consider the case where you've got a number of argument combinations and then a callback. Your arguments up to the callback can have any number of combinations, but the callback is always at the end. If you wanted to define all of those combinations and then allow the callback to optional, that's _a lot_ of re-definition. That's where Optional Args come in:
+
+```javascript
+api.users.get = leFunc({
+  "Number,Object,Function?": function( id, params, callback ){
+    return http( '/api/users/' + id + parseParams( params ), callback );
+  }
+, "Object,Function?": function( params, callback ){
+    return http( '/api/users' + parseParams( params ), callback );
+  }
+, "Function?": function( callback ){
+    return http( '/api/users', callback );
+  }
+});
 ```
 
 ## A less verbose syntax
