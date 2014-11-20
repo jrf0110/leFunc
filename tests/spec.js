@@ -81,6 +81,46 @@ describe('leFunc', function(){
         var e = new Error("The function of type StringNumberFunction is undefined");
         expect(function(){func1("test", 1, function(){})}).toThrow(e);
       });
+      it('Should allow for optional args', function(){
+        var counter = 0;
+        var fn = leFunc({
+          'String,Function?': function(){
+            counter++;
+          }
+        });
+
+        fn('ahhyeahhh');
+        fn('ahhyeahhh', function(){});
+
+        expect( counter ).toEqual( 2 );
+      });
+      it('Should allow for arbitrary optional args', function(){
+        var counter = 0;
+        var fn = leFunc({
+          'String,Object?,Function?': function(){
+            counter++;
+          }
+        });
+
+        fn('ahhyeahhh');
+        fn('ahhyeahhh', null, function(){});
+        fn('ahhyeahhh', {});
+
+        expect( counter ).toEqual( 3 );
+      });
+      it('Should not allow an optional type to be fulfilled by the wrong type', function(){
+        var counter = 0;
+        var fn = leFunc({
+          'String,Function?': function(){
+            counter++;
+          }
+        });
+
+        fn('ahhyeahhh', function(){});
+
+        var e = new Error("The function of type StringString is undefined");
+        expect(function(){ fn('ahhyeahhh', 'yeeeebuddy'); }).toThrow(e);
+      });
     });
 
     describe('Shorthand Syntax', function(){
