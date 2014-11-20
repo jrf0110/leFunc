@@ -1,0 +1,27 @@
+{
+  "name": "leFunc",
+  "main": "index.js",
+  "version": "1.2.2",
+  "homepage": "https://github.com/jrf0110/leFunc",
+  "authors": [
+    "John Fawcett <jrf0110@gmail.com>"
+  ],
+  "description": "Overload your functions",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "Overload",
+    "function"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
