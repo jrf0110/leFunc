@@ -109,7 +109,6 @@ describe('leFunc', function(){
         expect( counter ).toEqual( 3 );
       });
       it('Should allow for single optional arg', function(){
-        console.log('Should allow for single optional arg');
         var counter = 0;
         var fn = leFunc({
           'Function?': function(){
